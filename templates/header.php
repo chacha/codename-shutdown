@@ -10,4 +10,3 @@
 			</div>
 			<?php Navigation::getMessageHTML(); ?>
 		</div>
-		This was a triumph!
