@@ -4,4 +4,4 @@
 
 <p>Notice: We are currently in beta. Poking around where you don't belong will lead to removal of your companion cube.</p>
 
-<a href="start">Click Here to Begin</a>
+<p><a href="start">Click Here to Begin</a></p>

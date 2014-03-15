@@ -23,6 +23,24 @@ Router::addRoute( '', function(){
 	load_template( 'footer' );
 } );
 
+Router::addRoute( 'start', function(){
+	load_template( 'header' );
+	load_template( 'pages/start' );
+	load_template( 'footer' );
+} );
+
+Router::addRoute( '12', function(){
+	load_template( 'header' );
+	load_template( 'pages/two' );
+	load_template( 'footer' );
+} );
+
+Router::addRoute( '44', function(){
+	load_template( 'header' );
+	load_template( 'pages/three' );
+	load_template( 'footer' );
+} );
+
 $callback = Router::getRoute();
 if( !$callback ){
 
