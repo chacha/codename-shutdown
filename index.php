@@ -13,15 +13,17 @@ function get_url( $path = '' ){
 	return DOMAIN . STARTURI . $path;
 }
 
-function get_page_id(){
-	return str_replace( STARTURI, '', $_SERVER['REQUEST_URI'] );
-}
-
 function load_template( $template_name ) {
 	include ABSPATH . '/templates/' . $template_name . '.php';
 }
 
-$callback = Router::getRoute( get_page_id() );
+Router::addRoute( '', function(){
+	load_template( 'header' );
+	load_template( 'pages/index' );
+	load_template( 'footer' );
+} );
+
+$callback = Router::getRoute();
 if( !$callback ){
 
 	load_template( 'header' );

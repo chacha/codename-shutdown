@@ -23,6 +23,10 @@
 }
 
 body{
-	font-family: arial;
+	font-family: 'Courier New';
 	padding-top: 50px;
+}
+
+p {
+	width: 33em;
 }
