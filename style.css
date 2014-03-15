@@ -1,0 +1,28 @@
+#navigation {
+	background: #3399FF;
+	color: white;
+	font-family: arial;
+	font-size: 12px;
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+}
+
+#navigation .title {
+	float: left;
+	font-weight: bold;
+	padding: 7px 30px 6px 5px;
+}
+
+#navigation .message{
+	background-color: #FF6600;
+	padding: 7px 5px 6px 5px;
+	float: left;
+	width: 33em;
+}
+
+body{
+	font-family: arial;
+	padding-top: 50px;
+}
