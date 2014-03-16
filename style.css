@@ -32,3 +32,21 @@ p {
 	margin-right: auto;
 	width: 33em;
 }
+
+pre {
+	margin-left: auto;
+	margin-right: auto;
+	width: 33em;
+}
+
+.clear {
+	clear: both;
+}
+
+.warning {
+	background-color: #FF6600;
+	margin-left: auto;
+	margin-right: auto;
+	padding: 10px;
+	width: 33em;
+}

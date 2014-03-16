@@ -1,5 +1,6 @@
 <p>Good Job! You have officially exited the basic training course. Things will now get harder.</p>
-<p>If the numbers 1 to 5 are written out in words: one, two, three, four, five, then there are 3 + 3 + 5 + 4 + 4 = 19 letters used in total.</p>
-<p>If all the numbers from 1 to 100 (one hundred) inclusive were written out in words, how many letters would be used?</p>
-
-<p>Do not count spaces or hyphens. "twenty-two" has 9 letters.</p> 
+<p>A fibonacci sequence is a set of numbers created by adding the sums of the previous two numbers. For instance, adding 0 and 1 would give you the third number, 1. 1 + 1 = 2, and so on.</p>
+<p>The next 10 terms would be:</p>
+<pre>0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89</pre>
+<p>In this case the 6th fibonacci number is 5.</p>
+<p>Find the 30th.</p>

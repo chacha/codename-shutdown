@@ -41,6 +41,12 @@ Router::addRoute( '44', function(){
 	load_template( 'footer' );
 } );
 
+Router::addRoute( '514229', function(){
+	load_template( 'header' );
+	load_template( 'pages/four' );
+	load_template( 'footer' );
+} );
+
 $callback = Router::getRoute();
 if( !$callback ){
 
