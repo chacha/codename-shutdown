@@ -29,6 +29,29 @@ Router::addRoute( 'start', function(){
 	load_template( 'footer' );
 } );
 
+Router::addRoute( 'login', function(){
+
+	if( isset( $_POST['username'] ) && isset( $_POST['password'] ) ){
+		if( $_POST['username'] == 'tyler' && $_POST['password'] == 3128 ){
+			header('Location: ' . get_url( 'dashboard' ) );
+		}
+	}
+
+	load_template( 'header' );
+	load_template( 'login' );
+	load_template( 'footer' );
+
+} );
+
+Router::addRoute( 'dashboard', function(){
+
+	Navigation::setMessage( 'Welcome back, Tyler.' );
+	load_template( 'header' );
+	load_template( 'dashboard' );
+	load_template( 'footer' );
+
+} );
+
 Router::addRoute( '12', function(){
 	load_template( 'header' );
 	load_template( 'pages/two' );
