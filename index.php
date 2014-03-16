@@ -6,6 +6,8 @@ define( 'ABSPATH', __DIR__ );
 
 error_reporting(E_ALL);
 
+include ABSPATH . '/config.php';
+
 include ABSPATH . '/lib/navigation.php';
 include ABSPATH . '/lib/router.php';
 
