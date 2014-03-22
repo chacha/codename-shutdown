@@ -15,7 +15,7 @@ at org.mortbay.jetty.webapp.WebAppContext.handle(WebAppContext.java:418)
 at org.mortbay.jetty.handler.HandlerWrapper.handle(HandlerWrapper.java:152)
 at org.mortbay.jetty.Server.handle(Server.java:326)
 </pre>
-See <a href="<?php echo get_url('dashboard'); ?>">super secret admin console</a> for more information.
+See <a href="<?php echo get_url('login'); ?>">super secret admin console</a> for more information.
 </div>
 <div class="clear"></div>
 <p>Good job. The fibonacci sequence is just the beginning to many interesting problems ahead.</p>
