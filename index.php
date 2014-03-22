@@ -1,6 +1,6 @@
 <?php
 
-define( 'DOMAIN', 'http://localhost' );
+define( 'DOMAIN', 'http://192.168.1.73' );
 define( 'STARTURI', '/play/' );
 define( 'ABSPATH', __DIR__ );
 
@@ -8,8 +8,24 @@ error_reporting(E_ALL);
 
 include ABSPATH . '/config.php';
 
+include ABSPATH . '/lib/database.php';
+include ABSPATH . '/lib/authentication.php';
 include ABSPATH . '/lib/navigation.php';
 include ABSPATH . '/lib/router.php';
+
+$database = new Database( DB_HOST, DB_USER, DB_PASS, DB_NAME );
+$database->connect();
+
+$sql = "Create TABLE IF NOT EXISTS `users` (
+	`id` int(11) unsigned NOT NULL auto_increment,
+	`name` varchar(255) NOT NULL default '',
+	`level` varchar(255) NOT NULL default '',
+	PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8";
+
+$database->query( $sql );
+
+Authentication::init();
 
 function get_url( $path = '' ){
 	return DOMAIN . STARTURI . $path;
@@ -35,6 +51,7 @@ Router::addRoute( 'login', function(){
 
 	if( isset( $_POST['username'] ) && isset( $_POST['password'] ) ){
 		if( $_POST['username'] == 'tyler' && $_POST['password'] == 3128 ){
+			Authentication::set_user( 'tyler', 'admin' );
 			header('Location: ' . get_url( 'dashboard' ) );
 		}
 	}
@@ -42,6 +59,13 @@ Router::addRoute( 'login', function(){
 	load_template( 'header' );
 	load_template( 'login' );
 	load_template( 'footer' );
+
+} );
+
+Router::addRoute( 'logout', function(){
+
+	Authentication::clear_user();
+	header( 'Location: ' . get_url( '' ) );
 
 } );
 
