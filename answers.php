@@ -1,20 +1,26 @@
 <?php
 
-// Answers
-Router::addRoute( '12', function(){
-	load_template( 'header' );
-	load_template( 'pages/two' );
-	load_template( 'footer' );
-} );
+$questions = array(
+	'12' => array(
+		'template' => 'two',
+		'answer' => '44',
+	),
+	'44' => array(
+		'template' => 'three',
+		'answer' => '514229'
+	),
+	'514229' => array(
+		'template' => 'four',
+		'answer' => '?'
+	)
+);
 
-Router::addRoute( '44', function(){
-	load_template( 'header' );
-	load_template( 'pages/three' );
-	load_template( 'footer' );
-} );
+foreach( $questions as $route => $options ){
 
-Router::addRoute( '514229', function(){
-	load_template( 'header' );
-	load_template( 'pages/four' );
-	load_template( 'footer' );
-} );
+	Router::addRoute( $route, function() use ( $route, $options ) {
+		load_template( 'header' );
+		load_template( 'pages/' . $options['template'] );
+		load_template( 'footer' );
+	} );
+
+}
