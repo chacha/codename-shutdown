@@ -15,6 +15,16 @@
 	padding: 7px 30px 6px 5px;
 }
 
+#navigation .user {
+	float: right;
+	font-weight: bold;
+	padding: 7px 30px 6px 5px;
+}
+
+#navigation .user a{
+	color: white;
+}
+
 #navigation .message{
 	background-color: #FF6600;
 	padding: 7px 5px 6px 5px;
@@ -73,17 +83,16 @@ pre {
 }
 
 #console{
-	background-color: black;
-	color: white;
+	font-size: 14px;
 	height: 400px;
 	padding: 10px;
 	margin-left: auto;
 	margin-right: auto;
 	overflow-y: scroll;
-	width: 33em;
+	width: 600px;
 }
 #console-text-container{
-	width: 33em;
+	width: 600px;
 	margin-left: auto;
 	margin-right: auto;
 }
