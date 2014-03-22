@@ -13,19 +13,14 @@ include ABSPATH . '/lib/authentication.php';
 include ABSPATH . '/lib/navigation.php';
 include ABSPATH . '/lib/router.php';
 include ABSPATH . '/lib/commands.php';
+include ABSPATH . '/lib/user.php';
+include ABSPATH . '/lib/system.php';
+
+new System();
 
 $database = new Database( DB_HOST, DB_USER, DB_PASS, DB_NAME );
 $database->connect();
 
-$sql = "Create TABLE IF NOT EXISTS `users` (
-	`id` int(11) unsigned NOT NULL auto_increment,
-	`name` varchar(255) NOT NULL default '',
-	`password` varchar(255) NOT NULL default '',
-	`level` varchar(255) NOT NULL default '',
-	PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8";
-
-$database->query( $sql );
 
 Authentication::init();
 
@@ -67,9 +62,9 @@ Router::addRoute( 'start', function(){
 Router::addRoute( 'login', function(){
 
 	if( isset( $_POST['username'] ) && isset( $_POST['password'] ) ){
-		if( $_POST['username'] == 'tyler' && $_POST['password'] == 3128 ){
-			Authentication::set_user( 'tyler', 'admin' );
-			header('Location: ' . get_url( 'dashboard' ) );
+		$loggedIn = User::login( $_POST['username'], $_POST['password'] );
+		if( $loggedIn ){
+			header( 'Location: ' . get_url( 'dashboard' ) );
 		}
 	}
 

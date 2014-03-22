@@ -52,8 +52,8 @@ function create_user( $username, $password, $level ){
 		return array( 'error' => '400', 'status' => 'username already taken' );
 	}
 
-	$string =  'INSERT INTO `users` (name, level) VALUES( "%s", "%s")';
-	$string = sprintf( $string, $username, $level );
+	$string =  'INSERT INTO `users` (name, password, level) VALUES( "%s", "%s", "%s")';
+	$string = sprintf( $string, $username, make_password( $username, $password ), $level );
 	return $database->query( $string );
 }
 
@@ -67,7 +67,5 @@ function delete_user( $user_id ){
 }
 
 function make_password( $username, $password ){
-	return password_hash( $password, PASSWORD_DEFAULT, array(
-		'salt' => $username
-	) );
+	return crypt( $password, $username );
 }

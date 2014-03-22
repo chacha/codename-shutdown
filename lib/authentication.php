@@ -19,7 +19,8 @@ class Authentication{
 	public static function set_user( $name, $level ) {
 		$_SESSION['user'] = array(
 			'name' => $name,
-			'level' => $level
+			'level' => $level,
+			'data' => $data
 		);
 	}
 
@@ -44,7 +45,7 @@ class Authentication{
 
 		return self::$user['name'];	
 	}
-	
+
 	public static function is_admin(){
 		if( ! self::$is_logged_in )
 			return false;

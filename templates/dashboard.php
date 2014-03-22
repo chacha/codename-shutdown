@@ -65,7 +65,11 @@ $(function(){
 						terminal.echo( output );
 					}
 	       			} ),
-		}
+		},
+		"system" : {
+			"help" : "Allows execution of system commands",
+			"callback" : ajaxHelper( 'system' )
+		},
 	};
 
 	var terminal = $("#console").terminal( function( command, term ) {
