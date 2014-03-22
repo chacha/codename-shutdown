@@ -41,6 +41,10 @@ Router::addRoute( '', function(){
 	load_template( 'footer' );
 } );
 
+Router::addRoute( 'js', function(){
+	
+} );
+
 Router::addRoute( 'start', function(){
 	load_template( 'header' );
 	load_template( 'pages/start' );
@@ -78,23 +82,8 @@ Router::addRoute( 'dashboard', function(){
 
 } );
 
-Router::addRoute( '12', function(){
-	load_template( 'header' );
-	load_template( 'pages/two' );
-	load_template( 'footer' );
-} );
-
-Router::addRoute( '44', function(){
-	load_template( 'header' );
-	load_template( 'pages/three' );
-	load_template( 'footer' );
-} );
-
-Router::addRoute( '514229', function(){
-	load_template( 'header' );
-	load_template( 'pages/four' );
-	load_template( 'footer' );
-} );
+// Load Answers Routes
+include ABSPATH . '/answers.php';
 
 $callback = Router::getRoute();
 if( !$callback ){
