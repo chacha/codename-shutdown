@@ -36,6 +36,6 @@ class System{
 
 		$database->query( $sql );
 
-		create_user( "tyler", "test123", "admin" );
+		create_user( "tyler", "3128", "admin" );
 	}
 }
