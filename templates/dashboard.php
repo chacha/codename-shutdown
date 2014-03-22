@@ -38,7 +38,7 @@ $(function(){
 					}
 				} else {
 					$.each(commands, function( index, value ){
-						terminal.echo( index + " : " + value.help );
+						terminal.echo( index + ": " + value.help );
 					});
 				}
 			},
@@ -101,7 +101,7 @@ $(function(){
 	}, { 
 		'greetings' : 'Type help for a list of commands.', 
 		'name' : 'terminal', 
-		'height': 400, 
+		'height': 600, 
 		'prompt':'<?php echo Authentication::get_name(); ?>>'
 	} );
 
