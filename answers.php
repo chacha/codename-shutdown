@@ -1,4 +1,5 @@
 <?php
+global $questions;
 
 $questions = array(
 	'12' => array(
