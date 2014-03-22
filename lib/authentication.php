@@ -61,3 +61,19 @@ class Authentication{
 	}
 
 }
+
+function is_logged_in(){
+	return Authentication::is_logged_in();
+}
+
+function require_login(){
+	if( ! is_logged_in() ){
+		header( 'Location: ' . get_url( 'login' ) );
+	}
+}
+
+function require_admin(){
+	if( ! Authentication::is_admin() ){
+		header( 'Location: ' . get_url( 'login' ) );
+	}
+}

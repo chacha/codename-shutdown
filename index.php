@@ -75,6 +75,7 @@ Router::addRoute( 'login', function(){
 } );
 
 Router::addRoute( 'logout', function(){
+	require_login();
 
 	Authentication::clear_user();
 	header( 'Location: ' . get_url( '' ) );
@@ -82,6 +83,7 @@ Router::addRoute( 'logout', function(){
 } );
 
 Router::addRoute( 'dashboard', function(){
+	require_admin();
 
 	Navigation::setMessage( 'Welcome back, Tyler.' );
 	load_template( 'header' );
