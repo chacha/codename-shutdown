@@ -54,7 +54,6 @@ $(function(){
 		"list_users" : {
 			"help" : "Displays a list of current users",
 				"callback" : ajaxHelper( 'list_users', function( response ){ 
-					console.log( response.result );
 					for( var i = 0; i < response.result.length; i++ ){
 						var user = response.result[i];
 						var output = "[" + user.id + "] " + user.name;
@@ -65,6 +64,23 @@ $(function(){
 						terminal.echo( output );
 					}
 	       			} ),
+		},
+		"find_answers" : {
+			"help" : "Searches for the answer to a question. find_answers <question_id>",
+			"callback" : ajaxHelper( 'find_answers', function( response ){
+				var code = response.code;
+				if( code == 200 ){
+					terminal.echo( response.result.answer );
+				}
+				if( code == 403 ){
+					if( response.input == undefined ){
+						terminal.echo( "This question requires a password." );
+					} else {
+						terminal.echo( "Incorrect password. Try again." );
+					}
+					terminal.echo( "Hint: " + response.hint );
+				}	
+			} ),
 		},
 		"system" : {
 			"help" : "Allows execution of system commands",

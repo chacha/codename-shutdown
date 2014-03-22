@@ -1,71 +1,47 @@
 <?php
 
-Commands::addCommand( 'list_users', function(){
+Commands::addCommand( 'find_answers', function(){
+	global $questions;
 
-	global $database;
+	if( ! isset( $_REQUEST['args'][0] ) ) {
+		return array( 'error' => 400, 'status' => 'Must provide question id' );
+	}
 
-	$data = $database->query( 'SELECT * FROM `users`' );
-	return array( 'result' => $data );
+	$question_id = $_REQUEST['args'][0];
+
+	if( array_key_exists( $question_id, $questions ) ) {
+
+		$question = $questions[ $question_id ];
+		if( array_key_exists( 'password', $question ) ) {
+			
+			if( ! isset( $_REQUEST['args'][1] ) ) {
+				return array( 
+					'code' => 403,
+					'hint' => $question['hint']
+				);
+			}
+
+			if( $_REQUEST['args'][1] == $question['password'] ) {
+				return array(
+					'code' => 200,
+					'result' => $question
+				);
+			} else {
+				return array( 
+					'code' => 403,
+					'hint' => $question['hint'],
+					'input' => $_REQUEST['args'][1],
+				);
+			}
+
+		} else {
+			return array( 
+				'code' => '200',
+				'result' => $question 
+			);
+		}
+
+	}
+
 
 } );
-
-Commands::addCommand( 'create_user', function(){
-	if( ! isset( $_REQUEST['args'][0] ) ){
-		return array( 'error' => '400', 'status' => 'must include name argument' );
-	}
-	$name = $_REQUEST['args'][0];
-
-	if( ! isset( $_REQUEST['args'][1] ) ){
-		return array( 'error' => '400', 'status' => 'must include password argument' );
-	}
-	$password = $_REQUEST['args'][1];
-
-	if( isset( $_REQUEST['args'][2] ) && $_REQUEST['args'][2] == "1" ){
-		$level = 'admin';
-	} else {
-		$level = 'user';
-	}
-
-	return array( create_user( $name, $password, $level ) );
-} );
-
-Commands::addCommand( 'delete_user', function(){
-	
-	if( ! isset( $_REQUEST['args'][0] ) ){
-		return array( 'error' => '400', 'status' => 'must include name argument' );
-	}
-
-	$id = $_REQUEST['args'][0];
-	return array( delete_user( $id ) );
-} );
-
-function create_user( $username, $password, $level ){
-	global $database;
-
-	$username = $database->escape( $username );
-	$password = $database->escape( $password );
-	$level = $database->escape( $level );
-
-	$string = sprintf( 'SELECT * FROM `users` WHERE name="%s" LIMIT 0,1', $username );
-	$found = $database->query( $string );
-	if( $found ){
-		return array( 'error' => '400', 'status' => 'username already taken' );
-	}
-
-	$string =  'INSERT INTO `users` (name, password, level) VALUES( "%s", "%s", "%s")';
-	$string = sprintf( $string, $username, make_password( $username, $password ), $level );
-	return $database->query( $string );
-}
-
-function delete_user( $user_id ){
-	global $database;
-	$string =  'DELETE FROM `users` WHERE id="%d"';
-
-	$user_id = intval( $user_id );
-	$string = sprintf( $string, $user_id );
-	return $database->query( $string );
-}
-
-function make_password( $username, $password ){
-	return crypt( $password, $username );
-}
