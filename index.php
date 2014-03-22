@@ -20,6 +20,7 @@ $database->connect();
 $sql = "Create TABLE IF NOT EXISTS `users` (
 	`id` int(11) unsigned NOT NULL auto_increment,
 	`name` varchar(255) NOT NULL default '',
+	`password` varchar(255) NOT NULL default '',
 	`level` varchar(255) NOT NULL default '',
 	PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8";
@@ -44,7 +45,6 @@ Router::addRoute( '', function(){
 
 include ABSPATH . '/commands.php';
 Router::addRoute( 'js_terminal', function(){
-
 	if ( ! isset( $_REQUEST['command'] ) ) {
 		die( json_encode( array( 'error' => '400', 'status' => 'Bad Request' ) ) );
 	}

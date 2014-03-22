@@ -3,6 +3,27 @@
 </div>
 <script>
 $(function(){
+	var ajaxURL = "<?php echo get_url( 'js_terminal' ); ?>";
+	var ajaxHelper = function( command, callback ){
+
+		if( callback == undefined ){
+			callback = function( response ){
+				if( response.error != undefined ){
+					terminal.echo( response.status );
+				} else {
+					terminal.echo( "Done" );
+				}
+			};
+		}
+
+		return function(){ 
+			$.getJSON( ajaxURL, {
+				"command" : command,
+				"args" : arguments,
+			}, callback );
+		}
+	}
+	
 	var commands = {
 
 		"help" : {
@@ -23,11 +44,28 @@ $(function(){
 			},
 		},
 		"create_user" : {
-			"help" : "Creates a new user. create_user <username> <admin 0 or 1>"
+			"help" : "Creates a new user. create_user <username> <password> <admin 0 or 1>",
+			"callback" : ajaxHelper( 'create_user' ),
 		},
 		"delete_user" : {
-			"help" : "Deletes an existing user. delete_user <username>"
+			"help" : "Deletes an existing user. delete_user <username>",
+			"callback" : ajaxHelper( 'delete_user' ),
 		},
+		"list_users" : {
+			"help" : "Displays a list of current users",
+				"callback" : ajaxHelper( 'list_users', function( response ){ 
+					console.log( response.result );
+					for( var i = 0; i < response.result.length; i++ ){
+						var user = response.result[i];
+						var output = "[" + user.id + "] " + user.name;
+						if( user.level == "admin" ){
+							output = output + "*";
+						}
+
+						terminal.echo( output );
+					}
+	       			} ),
+		}
 	};
 
 	var terminal = $("#console").terminal( function( command, term ) {
