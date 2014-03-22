@@ -12,6 +12,7 @@ include ABSPATH . '/lib/database.php';
 include ABSPATH . '/lib/authentication.php';
 include ABSPATH . '/lib/navigation.php';
 include ABSPATH . '/lib/router.php';
+include ABSPATH . '/lib/commands.php';
 
 $database = new Database( DB_HOST, DB_USER, DB_PASS, DB_NAME );
 $database->connect();
@@ -41,8 +42,20 @@ Router::addRoute( '', function(){
 	load_template( 'footer' );
 } );
 
-Router::addRoute( 'js', function(){
-	
+include ABSPATH . '/commands.php';
+Router::addRoute( 'js_terminal', function(){
+
+	if ( ! isset( $_REQUEST['command'] ) ) {
+		die( json_encode( array( 'error' => '400', 'status' => 'Bad Request' ) ) );
+	}
+
+	$callback = Commands::getCommand( $_REQUEST['command'] );
+	if( !$callback ){
+		die( json_encode( array( 'error' => '404', 'status' => 'Command Not Found' ) ) );
+	}
+
+	$value = $callback();
+	die( json_encode( $value ) );
 } );
 
 Router::addRoute( 'start', function(){
