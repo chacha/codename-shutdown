@@ -28,7 +28,10 @@ Commands::addCommand( 'list_users', function(){
 	global $database;
 
 	$data = $database->query( 'SELECT * FROM `users`' );
-	return array( 'result' => $data );
+	if( $data )
+		return array( 'result' => $data );
+	else
+		return array( 'error' => 404, 'status' => 'no users found' );
 
 } );
 
@@ -49,7 +52,7 @@ Commands::addCommand( 'create_user', function(){
 		$level = 'user';
 	}
 
-	return array( create_user( $name, $password, $level ) );
+	return create_user( $name, $password, $level );
 } );
 
 Commands::addCommand( 'delete_user', function(){
@@ -77,7 +80,14 @@ function create_user( $username, $password, $level ){
 
 	$string =  'INSERT INTO `users` (name, password, level) VALUES( "%s", "%s", "%s")';
 	$string = sprintf( $string, $username, make_password( $username, $password ), $level );
-	return $database->query( $string );
+	$status = $database->query( $string );
+
+	if( ! admin_exists() ){
+		return array( 
+			'error' => 200, 
+			'status' => 'No more admins exists. Are you sure you want to do that?'
+		);
+	}	
 }
 
 function delete_user( $user_id ){
@@ -91,4 +101,16 @@ function delete_user( $user_id ){
 
 function make_password( $username, $password ){
 	return crypt( $password, $username );
+}
+
+function admin_exists(){
+	global $database;
+
+	$string = 'SELECT * FROM `users` WHERE level="admin" LIMIT 0,1';
+	$found = $database->query( $string );
+	if( ! $found ){
+		return false;
+	} else {
+		return true;
+	}
 }

