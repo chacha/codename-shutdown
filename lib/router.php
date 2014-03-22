@@ -12,7 +12,7 @@ class Router{
 		if( ! $identifier ) {
 			$identifier = self::getCurrentPage();
 		}
-
+		
 		if( array_key_exists( $identifier, self::$routes ) ) {
 			return self::$routes[ $identifier ];
 		} else {
@@ -21,6 +21,14 @@ class Router{
 	}
 
 	public static function getCurrentPage(){
-		return str_replace( STARTURI, '', $_SERVER['REQUEST_URI'] );
+		$page = str_replace( STARTURI, '', $_SERVER['REQUEST_URI'] );
+
+		// Get rid of query strings
+		$pos = strpos( $page, "?" );
+		if( $pos ){
+			$page = substr( $page, 0, $pos );
+		}
+
+		return $page;
 	}
 }
